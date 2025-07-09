@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          cache-dependency-path: TimeSE/package-lock.json
+          node-version: 20
+          cache: 'npm'
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -22,7 +26,10 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
-
+        with:
+          cache-dependency-path: TimeSE/package-lock.json
+          node-version: 20
+          cache: 'npm'
       - name: Build project
         run: npm run build
 
