@@ -20,12 +20,12 @@ concurrency:
   group: 'pages'
   cancel-in-progress: true
 
+defaults:
+  run:
+    working-directory: ./TimeSE
 jobs:
   # 单次部署的工作描述
   deploy:
-    defaults:
-      run:
-        working-directory: ./TimeSE
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
