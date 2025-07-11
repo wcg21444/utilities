@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import dayjs from 'dayjs'
 import type { Dayjs } from 'dayjs'
+import Timeline from './components/Timeline.vue'
 
 interface UnitOption {
   value: 'sec' | 'min' | 'hour'
@@ -78,7 +79,34 @@ const unit_options: UnitOption[] = [
     value: 'hour',
     label: 'hour',
   },
-]
+];
+
+const timelineItems = ref([
+  {
+    title: '项目启动',
+    date: '2023-01-15',
+    description: '召开项目启动会议，确定项目目标和范围',
+    tags: ['规划', '会议']
+  },
+  {
+    title: '需求分析完成',
+    date: '2023-02-10',
+    description: '完成用户需求收集和分析，输出需求文档',
+    tags: ['需求', '文档']
+  },
+  {
+    title: 'UI设计定稿',
+    date: '2023-03-05',
+    description: '完成所有页面的UI设计并获得客户确认',
+    tags: ['设计', '评审']
+  },
+  {
+    title: '开发阶段开始',
+    date: '2023-03-20',
+    description: '前端和后端开发工作正式开始',
+    tags: ['开发', '里程碑']
+  }
+]);
 
 const unit = ref<'sec' | 'min' | 'hour'>('min');
 </script>
@@ -110,19 +138,24 @@ const unit = ref<'sec' | 'min' | 'hour'>('min');
     </div>
     <p class="time-point">新的时间点:{{ new_time_point }}</p>
   </div>
+
+  <div>
+    <Timeline :items="timelineItems" marker-color="#4CAF50" line-color="#9E9E9E"></Timeline>
+  </div>
 </template>
 <!-- TODO : Time Allocator  -->
+
 <!--  
 - 0:00      <--begin
 - 1:00          description
-- 2:00          3hours
+- 2:00          3h
   - 2:15
   - 2:20
   - 2:25    <-- sub-begin
-  - 2:30
+  - 2:30        5min
   - 2:35    <-- sub-end
-  - 2:40  
-  - 2:45    <-- sub-begin
+  - 2:40         
+  - 2:45    <-- sub-begin   5min
   - 2:50    <-- sub-end
   - 2:55
 - 3:00      <--end
@@ -135,7 +168,7 @@ const unit = ref<'sec' | 'min' | 'hour'>('min');
 - 10:00
 ...
 
-如何实现时间分配器?
+如何实现时间分配器?  可以放置时间游标,自动响应时间间隔
   如何添加时间刻度组件?
  -->
 <style scoped>
