@@ -40,8 +40,10 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+        working-directory: ./TimeSE
       - name: Build
         run: npm run build
+        working-directory: ./TimeSE
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
