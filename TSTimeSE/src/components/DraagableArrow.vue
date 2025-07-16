@@ -1,8 +1,9 @@
 <template>
-    <div ref="pointContainer" class="point-container" :style="pointStyle">
-        <div class="point"></div>
-    </div>
+    <div ref="dragContainer" class="drag-container" :style="pointStyle">
+        <div class="arrow"></div>
+        <slot></slot>
 
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -19,11 +20,12 @@ const down_y = ref(0);
 const last_x = ref(0);//上次位移
 const last_y = ref(0);
 
-const pointContainer = ref<HTMLElement | null>(null);
-onMounted(() => {
-    if (pointContainer.value) {
+const disabedX = ref(true);
 
-        // console.log(`Initial position: X=${x_start.value}, Y=${y_start.value}`);
+const dragContainer = ref<HTMLElement | null>(null);
+onMounted(() => {
+    if (dragContainer.value) {
+
     }
 });
 
@@ -36,9 +38,9 @@ document.addEventListener('mousemove', (event) => {
 );
 //鼠标点击监听
 document.addEventListener('mousedown', (event) => {
-    if (!pointContainer.value) return;
+    if (!dragContainer.value) return;
     const target = event.target as HTMLElement;
-    if (!(target.parentElement == pointContainer.value)) {
+    if (!(target.parentElement == dragContainer.value)) {
         isDragging.value = false;
         return
     }
@@ -55,9 +57,13 @@ document.addEventListener('mouseup', () => {
 })
 
 const pointStyle = computed<CSSProperties>(() => {
-    console.log(isDragging.value);
-    console.log(x.value, y.value);
 
+    if (disabedX) {
+        console.log(y.value)
+        return {
+            transform: `translate(${0}px, ${y.value}px)`, position: `absolute`
+        }
+    }
     return {
         transform: `translate(${x.value}px, ${y.value}px)`, position: `absolute`
     }
@@ -66,18 +72,28 @@ const pointStyle = computed<CSSProperties>(() => {
 </script>
 
 <style scoped>
-.point {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: rgb(255, 0, 0);
-    border-radius: 50%;
+.arrow {
+    width: 40px;
+    height: 10px;
+    background-color: #3a81f2;
+    rotate: 180deg;
+    clip-path: polygon(0% 20%,
+            00% 00%,
+            80% 00%,
+            /*/---*/
+            100% 50%,
+            80% 100%,
+            /*\---*/
+            50% 100%,
+            0% 100%);
+    opacity: 0.8;
     user-select: none;
-    box-shadow: 1px 50px 10px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+
 }
 
-.point-container {
-    position: relative;
+.drag-container {
+    position: absolute;
     cursor: pointer;
     background-color: #7350504f;
     transition: 10ms;

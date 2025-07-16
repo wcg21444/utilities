@@ -81,32 +81,6 @@ const unit_options: UnitOption[] = [
   },
 ];
 
-const timelineItems = ref([
-  {
-    title: '项目启动',
-    date: '2023-01-15',
-    description: '召开项目启动会议，确定项目目标和范围',
-    tags: ['规划', '会议']
-  },
-  {
-    title: '需求分析完成',
-    date: '2023-02-10',
-    description: '完成用户需求收集和分析，输出需求文档',
-    tags: ['需求', '文档']
-  },
-  {
-    title: 'UI设计定稿',
-    date: '2023-03-05',
-    description: '完成所有页面的UI设计并获得客户确认',
-    tags: ['设计', '评审']
-  },
-  {
-    title: '开发阶段开始',
-    date: '2023-03-20',
-    description: '前端和后端开发工作正式开始',
-    tags: ['开发', '里程碑']
-  }
-]);
 
 const unit = ref<'sec' | 'min' | 'hour'>('min');
 </script>
@@ -140,7 +114,7 @@ const unit = ref<'sec' | 'min' | 'hour'>('min');
   </div>
 
   <div>
-    <Timeline :items="timelineItems" marker-color="#4CAF50" line-color="#9E9E9E"></Timeline>
+    <Timeline></Timeline>
   </div>
 </template>
 <!-- TODO : Time Allocator  -->
